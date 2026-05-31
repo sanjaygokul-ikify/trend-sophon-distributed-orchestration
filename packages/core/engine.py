@@ -42,6 +42,9 @@ class InferenceEngine:
         self.task_status = TaskStatus.COMPLETE
         logger.info(f"Task {task_id} execution complete")
 
+        # Store task result
+        self.task_results[task_id] = task_input
+
     def get_task_result(self, task_id: str):
         logger.info(f"Getting result for task {task_id}")
         # Return task result
