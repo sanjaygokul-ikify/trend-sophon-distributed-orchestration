@@ -15,28 +15,35 @@ class InferenceEngine:
             raise InvalidLLMType(f"Invalid LLM type: {llm_type}")
 
         # Initialize LLM model
-        if llm_type == LLMType.Codex:
-            # Load Codex model
-            logger.info("Loading Codex model...")
-        elif llm_type == LLMType.Claude:
-            # Load Claude model
-            logger.info("Loading Claude model...")
-        elif llm_type == LLMType.Gemini:
-            # Load Gemini model
-            logger.info("Loading Gemini model...")
+        try:
+            if llm_type == LLMType.Codex:
+                # Load Codex model
+                logger.info("Loading Codex model...")
+            elif llm_type == LLMType.Claude:
+                # Load Claude model
+                logger.info("Loading Claude model...")
+            elif llm_type == LLMType.Gemini:
+                # Load Gemini model
+                logger.info("Loading Gemini model...")
+        except Exception as e:
+            logger.error(f"Error initializing LLM model: {e}")
+            raise EngineInitializationError(f"Error initializing LLM model: {e}")
 
     def execute_task(self, task_id: str, task_input: Dict):
         logger.info(f"Executing task {task_id} with input: {task_input}")
-        # Call LLM model to execute task
-        if self.llm_type == LLMType.Codex:
-            # Call Codex model
-            logger.info("Executing task with Codex model...")
-        elif self.llm_type == LLMType.Claude:
-            # Call Claude model
-            logger.info("Executing task with Claude model...")
-        elif self.llm_type == LLMType.Gemini:
-            # Call Gemini model
-            logger.info("Executing task with Gemini model...")
+        try:
+            if self.llm_type == LLMType.Codex:
+                # Call Codex model
+                logger.info("Executing task with Codex model...")
+            elif self.llm_type == LLMType.Claude:
+                # Call Claude model
+                logger.info("Executing task with Claude model...")
+            elif self.llm_type == LLMType.Gemini:
+                # Call Gemini model
+                logger.info("Executing task with Gemini model...")
+        except Exception as e:
+            logger.error(f"Error executing task {task_id}: {e}")
+            raise
 
         # Update task status
         self.task_status = TaskStatus.COMPLETE
@@ -47,8 +54,14 @@ class InferenceEngine:
 
     def get_task_result(self, task_id: str):
         logger.info(f"Getting result for task {task_id}")
-        # Return task result
-        return self.task_results.get(task_id)
+        try:
+            task_result = self.task_results.get(task_id)
+        except Exception as e:
+            logger.error(f"Error getting result for task {task_id}: {e}")
+            raise
+        else:
+            logger.info(f"Result for task {task_id}: {task_result}")
+            return task_result
 
 class TaskScheduler:
     def __init__(self):
@@ -56,11 +69,19 @@ class TaskScheduler:
 
     def schedule_task(self, task_id: str, task_input: Dict):
         logger.info(f"Scheduling task {task_id} with input: {task_input}")
-        self.tasks[task_id] = task_input
+        try:
+            self.tasks[task_id] = task_input
+        except Exception as e:
+            logger.error(f"Error scheduling task {task_id}: {e}")
+            raise
 
     def get_scheduled_tasks(self):
         logger.info("Getting scheduled tasks...")
-        return list(self.tasks.keys())
+        try:
+            return list(self.tasks.keys())
+        except Exception as e:
+            logger.error(f"Error getting scheduled tasks: {e}")
+            raise
 
 class TransactionalMemoryStore:
     def __init__(self):
@@ -68,8 +89,16 @@ class TransactionalMemoryStore:
 
     def write(self, task_id: str, task_result: Dict):
         logger.info(f"Writing result for task {task_id}")
-        self.memory[task_id] = task_result
+        try:
+            self.memory[task_id] = task_result
+        except Exception as e:
+            logger.error(f"Error writing result for task {task_id}: {e}")
+            raise
 
     def read(self, task_id: str):
         logger.info(f"Reading result for task {task_id}")
-        return self.memory.get(task_id)
+        try:
+            return self.memory.get(task_id)
+        except Exception as e:
+            logger.error(f"Error reading result for task {task_id}: {e}")
+            raise
