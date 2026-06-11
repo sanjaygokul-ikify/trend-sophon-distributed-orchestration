@@ -56,6 +56,8 @@ class InferenceEngine:
         logger.info(f"Getting result for task {task_id}")
         try:
             task_result = self.task_results.get(task_id)
+            if task_result is None:
+                raise KeyError(f"Task result not found for task {task_id}")
         except Exception as e:
             logger.error(f"Error getting result for task {task_id}: {e}")
             raise
