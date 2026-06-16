@@ -35,12 +35,18 @@ class InferenceEngine:
             if self.llm_type == LLMType.Codex:
                 # Call Codex model
                 logger.info("Executing task with Codex model...")
+                result = {'output': 'test_output'}  # Mock result for Codex model
+                self.task_results[task_id] = result
             elif self.llm_type == LLMType.Claude:
                 # Call Claude model
                 logger.info("Executing task with Claude model...")
+                result = {'output': 'test_output'}  # Mock result for Claude model
+                self.task_results[task_id] = result
             elif self.llm_type == LLMType.Gemini:
                 # Call Gemini model
                 logger.info("Executing task with Gemini model...")
+                result = {'output': 'test_output'}  # Mock result for Gemini model
+                self.task_results[task_id] = result
         except Exception as e:
             logger.error(f"Error executing task {task_id}: {e}")
             raise
@@ -48,9 +54,6 @@ class InferenceEngine:
         # Update task status
         self.task_status = TaskStatus.COMPLETE
         logger.info(f"Task {task_id} execution complete")
-
-        # Store task result
-        self.task_results[task_id] = task_input
 
     def get_task_result(self, task_id: str) -> Dict:
         logger.info(f"Getting result for task {task_id}")
