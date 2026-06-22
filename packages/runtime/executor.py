@@ -17,6 +17,9 @@ class RuntimeExecutor:
             self.inference_engine.execute_task(task_id, task_input)
         except EngineInitializationError as e:
             logger.error(f"Error executing task {task_id}: {e}")
+        except Exception as e:
+            logger.error(f"Error executing task {task_id}: {e}")
+            raise
         else:
             logger.info(f"Task {task_id} execution complete")
 
@@ -26,6 +29,9 @@ class RuntimeExecutor:
             task_result = self.inference_engine.get_task_result(task_id)
         except EngineInitializationError as e:
             logger.error(f"Error getting result for task {task_id}: {e}")
+        except Exception as e:
+            logger.error(f"Error getting result for task {task_id}: {e}")
+            raise
         else:
             logger.info(f"Result for task {task_id}: {task_result}")
             return task_result
