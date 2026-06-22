@@ -49,6 +49,7 @@ class InferenceEngine:
                 self.task_results[task_id] = result
         except Exception as e:
             logger.error(f"Error executing task {task_id}: {e}")
+            self.task_status = TaskStatus.PENDING
             raise
 
         # Update task status
