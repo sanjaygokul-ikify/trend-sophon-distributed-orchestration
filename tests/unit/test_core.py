@@ -3,12 +3,14 @@ import unittest
 
 class TestCore(unittest.TestCase):
     def test_inference_engine(self):
-        llm_type = 'Codex'
+        llm_type = LLMType.Codex
         engine = InferenceEngine(llm_type)
         task_id = 'test_task'
         task_input = {'input': 'test_input'}
         engine.execute_task(task_id, task_input)
-        self.assertEqual(engine.get_task_result(task_id), None)
+        result = engine.get_task_result(task_id)
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, dict)
 
     def test_task_scheduler(self):
         scheduler = TaskScheduler()
