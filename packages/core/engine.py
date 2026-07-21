@@ -66,3 +66,6 @@ class InferenceEngine:
         except Exception as e:
             logger.error(f"Error getting result for task {task_id}: {e}")
             raise
+
+    def __str__(self):
+        return f"InferenceEngine(llm_type={self.llm_type}, task_status={self.task_status})"
