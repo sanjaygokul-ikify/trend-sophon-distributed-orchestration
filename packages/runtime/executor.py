@@ -35,3 +35,6 @@ class RuntimeExecutor:
         else:
             logger.info(f"Result for task {task_id}: {task_result}")
             return task_result
+
+    def __str__(self):
+        return f"RuntimeExecutor(llm_type={self.llm_type}, inference_engine={self.inference_engine})"
