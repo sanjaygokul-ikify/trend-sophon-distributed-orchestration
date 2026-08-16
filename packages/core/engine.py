@@ -42,7 +42,7 @@ class InferenceEngine:
                 logger.info("Executing task with Claude model...")
                 result = {'output': 'test_output'}  # Mock result for Claude model
                 self.task_results[task_id] = result
-            elif self.llm_type == LLMType.Gemini:
+            elif llm_type == LLMType.Gemini:
                 # Call Gemini model
                 logger.info("Executing task with Gemini model...")
                 result = {'output': 'test_output'}  # Mock result for Gemini model
@@ -61,6 +61,7 @@ class InferenceEngine:
         try:
             task_result = self.task_results.get(task_id)
             if task_result is None:
+                logger.error(f"Task result not found for task {task_id}")
                 raise KeyError(f"Task result not found for task {task_id}")
             return task_result
         except Exception as e:
